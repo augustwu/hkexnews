@@ -1,0 +1,11 @@
+create database hkexnews default character set utf8;
+use hkexnews;
+create table  if not exists hkexnews
+(
+    id int not null AUTO_INCREMENT PRIMARY KEY, 
+    code varchar(20) not null,
+    name varchar(20) not null,
+    mount varchar(50) not null,
+    percent varchar(50) not null,
+    createtime datetime default now()
+);
