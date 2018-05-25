@@ -10,33 +10,32 @@ class HkSpider(scrapy.Spider):
 
   name ="hkspider"
 
-  start_urls = ["http://sc.hkexnews.hk/TuniS/www.hkexnews.hk/mutualmarketsdw/main_c.htm"]
+#  start_urls = ["http://sc.hkexnews.hk/TuniS/www.hkexnews.hk/mutualmarketsdw/main_c.htm"]
 
 
-#  def start_requests(self):
-#    urls = ["http://sc.hkexnews.hk/TuniS/www.hkexnews.hk/sdw/search/mutualmarket_c.aspx?t=sh",
-#      "http://sc.hkexnews.hk/TuniS/www.hkexnews.hk/sdw/search/mutualmarket_c.aspx?t=sz"]
-#  
-# #   for url in urls:
-# #       yield scrapy.Request(url=url, callback=self.parse)
-# #   return [scrapy.Request(i.strip(), callback=self.parse) for i in urls]
-#    yield self.make_requests_from_url("http://sc.hkexnews.hk/TuniS/www.hkexnews.hk/mutualmarketsdw/main_c.htm")
+  def start_requests(self):
+    urls = ["http://sc.hkexnews.hk/TuniS/www.hkexnews.hk/sdw/search/mutualmarket_c.aspx?t=sh",
+      "http://sc.hkexnews.hk/TuniS/www.hkexnews.hk/sdw/search/mutualmarket_c.aspx?t=sz"]
+  
+    for url in urls:
+        yield scrapy.Request(url=url, callback=self.parse)
+   # return [scrapy.Request(i.strip(), callback=self.parse) for i in urls]
+ #   yield self.make_requests_from_url("http://sc.hkexnews.hk/TuniS/www.hkexnews.hk/mutualmarketsdw/main_c.htm")
+
+
+#  def parse(self, response):
+#    print dir(response)
+#    urls = response.xpath('//div[@class="mainContent"]//a/@href').extract()
+#    print urls
+#    for url in urls[:2]:
+#      yield scrapy.http.Request(url, callback=self.parse_url)
 #
 
-  def parse(self, response):
-    urls = response.xpath('//p[@class="MsoListParagraph"]//a/text()').extract()
-    print urls
-    for url in urls:
-      print url
-      yield Request(url, callback=self.parse_url)
 
-
-
-  def parse_url(self,response):
+  def parse(self,response):
     date_str = response.css("div#pnlResult div::text").extract_first()
     date_str = date_str.split(":")[1].strip() 
     datetime_object = datetime.strptime(date_str, '%d/%m/%Y')
-    print datetime_object  
 
     item_data = response.xpath('//*[@id="pnlResult"]/table//tr')
     for item in item_data[2:3]:
