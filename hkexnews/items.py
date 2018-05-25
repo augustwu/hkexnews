@@ -14,4 +14,5 @@ class HkexnewsItem(scrapy.Item):
     name = scrapy.Field()
     mount = scrapy.Field()
     percent = scrapy.Field()
+    market = scrapy.Field()
 

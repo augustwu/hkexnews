@@ -7,5 +7,7 @@ create table  if not exists hkexnews
     name varchar(20) not null,
     mount varchar(50) not null,
     percent varchar(50) not null,
-    createtime datetime default now()
+    createtime date default now()
 );
+
+alter table hkexnews add column market varchar(10) not null;
